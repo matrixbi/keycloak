@@ -97,21 +97,24 @@ public class TokenVerifier<T extends JsonWebToken> {
         private final String realmUrl;
 
         public RealmUrlCheck(String realmUrl) {
+            LOG.warning("GRAYS: in org.keycloak.TokenVerifier.RealmUrlCheck.RealmUrlCheck : instantiating");
             this.realmUrl = realmUrl;
         }
 
         @Override
         public boolean test(JsonWebToken t) throws VerificationException {
-            if(true) return true;
 
-            if (this.realmUrl == null) {
-                throw new VerificationException("Realm URL not set");
-            }
+            LOG.warning("GRAYS: in org.keycloak.TokenVerifier.RealmUrlCheck.test: enter");
 
-            if (! this.realmUrl.equals(t.getIssuer())) {
-                throw new VerificationException("Invalid token issuer. Expected '" + this.realmUrl + "', but was '" + t.getIssuer() + "'");
-            }
+//            if (this.realmUrl == null) {
+//                throw new VerificationException("Realm URL not set");
+//            }
+//
+//            if (! this.realmUrl.equals(t.getIssuer())) {
+//                throw new VerificationException("Invalid token issuer. Expected '" + this.realmUrl + "', but was '" + t.getIssuer() + "'");
+//            }
 
+            LOG.warning("GRAYS: in org.keycloak.TokenVerifier.RealmUrlCheck.test returning TRUE");
             return true;
         }
     };
