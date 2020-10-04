@@ -27,9 +27,36 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>keycloak-core</artifactId>
+    <version>10.0.2-noic-2</version>
     <name>Keycloak Core</name>
     <packaging>jar</packaging>
     <description/>
+
+    <repositories>
+        <repository>
+            <id>CommonArtifacts</id>
+            <url>https://matrixbi.pkgs.visualstudio.com/_packaging/CommonArtifacts/maven/v1</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>CommonArtifacts</id>
+            <url>https://matrixbi.pkgs.visualstudio.com/_packaging/CommonArtifacts/maven/v1</url>
+<!--            <releases>-->
+<!--                <enabled>true</enabled>-->
+<!--            </releases>-->
+<!--            <snapshots>-->
+<!--                <enabled>true</enabled>-->
+<!--            </snapshots>-->
+        </repository>
+    </distributionManagement>
 
     <properties>
         <maven.compiler.target>1.7</maven.compiler.target>
@@ -48,6 +75,7 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-common</artifactId>
+            <version>10.0.2</version>
         </dependency>
         <dependency>
             <groupId>org.bouncycastle</groupId>
@@ -109,6 +137,14 @@
                         <Import-Package>${keycloak.osgi.import}</Import-Package>
                         <Export-Package>${keycloak.osgi.export}</Export-Package>
                     </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>

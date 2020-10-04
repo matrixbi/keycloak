@@ -93,28 +93,31 @@ public class TokenVerifier<T extends JsonWebToken> {
     public static class RealmUrlCheck implements Predicate<JsonWebToken> {
 
         private static final RealmUrlCheck NULL_INSTANCE = new RealmUrlCheck(null);
+        private static final boolean ISSUER_CHECK_DISABLED = System.getProperty(
+                "keycloak.issuer.check.disabled",
+                Optional.ofNullable(System.getenv("KEYCLOAK_ISSUER_CHECK_DISABLED"))
+                        .orElse("false")
+        ).equalsIgnoreCase("true");
 
         private final String realmUrl;
 
         public RealmUrlCheck(String realmUrl) {
-            LOG.warning("GRAYS: in org.keycloak.TokenVerifier.RealmUrlCheck.RealmUrlCheck : instantiating");
             this.realmUrl = realmUrl;
         }
 
         @Override
         public boolean test(JsonWebToken t) throws VerificationException {
 
-            LOG.warning("GRAYS: in org.keycloak.TokenVerifier.RealmUrlCheck.test: enter");
+            if(ISSUER_CHECK_DISABLED) return true;
 
-//            if (this.realmUrl == null) {
-//                throw new VerificationException("Realm URL not set");
-//            }
-//
-//            if (! this.realmUrl.equals(t.getIssuer())) {
-//                throw new VerificationException("Invalid token issuer. Expected '" + this.realmUrl + "', but was '" + t.getIssuer() + "'");
-//            }
+            if (this.realmUrl == null) {
+                throw new VerificationException("Realm URL not set");
+            }
 
-            LOG.warning("GRAYS: in org.keycloak.TokenVerifier.RealmUrlCheck.test returning TRUE");
+            if (! this.realmUrl.equals(t.getIssuer())) {
+                throw new VerificationException("Invalid token issuer. Expected '" + this.realmUrl + "', but was '" + t.getIssuer() + "'");
+            }
+
             return true;
         }
     };
